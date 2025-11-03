@@ -1,0 +1,97 @@
+dialect = ../code/0
+
+test_range = dialect.analyze({
+  input: "c"
+  grammar: {
+    type: "range"
+    from: "a"
+    to: "z"
+  }
+})
+
+test_sequence = dialect.analyze({
+  input: "abc"
+  grammar: {
+    type: "sequence"
+    parts: [
+      { type: "symbol" text: "a" }
+      { type: "symbol" text: "b" }
+      { type: "symbol" text: "c" }
+    ]
+    format: "text"
+  }
+})
+
+test_alternative = dialect.analyze({
+  input: "hello"
+  grammar: {
+    type: "alternative"
+    options: [
+      { type: "symbol" text: "world" }
+      { type: "symbol" text: "hello" }
+    ]
+  }
+})
+
+test_optional = dialect.analyze({
+  input: ""
+  grammar: {
+    type: "optional"
+    grammar: { type: "symbol" text: "x" }
+  }
+})
+
+test_repetition = dialect.analyze({
+  input: "aaa"
+  grammar: {
+    type: "repetition"
+    grammar: { type: "symbol" text: "a" }
+    format: "text"
+    minimum: 1
+    maximum: 5
+  }
+})
+
+test_generate_range = dialect.generate({
+  value: "m"
+  grammar: {
+    type: "range"
+    from: "a"
+    to: "z"
+  }
+})
+
+check1 = x =>
+  | (test_range.success == 1 & test_range.value == "c") = "PASS"
+  | "FAIL"
+
+check2 = x =>
+  | (test_sequence.success == 1 & test_sequence.value == "abc") = "PASS"
+  | "FAIL"
+
+check3 = x =>
+  | (test_alternative.success == 1 & test_alternative.value == "hello") = "PASS"
+  | "FAIL"
+
+check4 = x =>
+  | (test_optional.success == 1 & test_optional.value == "") = "PASS"
+  | "FAIL"
+
+check5 = x =>
+  | (test_repetition.success == 1 & test_repetition.value == "aaa") = "PASS"
+  | "FAIL"
+
+check6 = x =>
+  | (test_generate_range.success == 1 & test_generate_range.output == "m") = "PASS"
+  | "FAIL"
+
+test1 = "Test Range: " + check1(0)
+test2 = "Test Sequence: " + check2(0)
+test3 = "Test Alternative: " + check3(0)
+test4 = "Test Optional: " + check4(0)
+test5 = "Test Repetition: " + check5(0)
+test6 = "Test Generate Range: " + check6(0)
+
+tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n" + test4 + "\n" + test5 + "\n" + test6 + "\n"
+
+tester

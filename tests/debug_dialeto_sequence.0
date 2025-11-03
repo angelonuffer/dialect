@@ -1,0 +1,21 @@
+dialeto = ../deps/dialeto/código/0
+
+test_sequence = dialeto.analisar({
+  entrada: "abc"
+  gramática: {
+    tipo: "sequência"
+    partes: [
+      { tipo: "símbolo" texto: "a" }
+      { tipo: "símbolo" texto: "b" }
+      { tipo: "símbolo" texto: "c" }
+    ]
+    formato: "texto"
+  }
+})
+
+tester = formato => (
+  "sucesso: " + test_sequence.sucesso + "\n" +
+  "valor: " + test_sequence.valor + "\n"
+)
+
+tester

@@ -1,0 +1,46 @@
+dialeto = ../deps/dialeto/código/0
+
+translate_parts = { parts index result } =>
+  | (index >= parts[.]) = result
+  | translate_parts({ parts: parts index: index + 1 result: [...result translate_grammar_to_portuguese(parts[index])] })
+
+translate_grammar_to_portuguese = grammar =>
+  | (grammar.type == "symbol") = {
+    tipo: "símbolo"
+    texto: grammar.text
+  }
+  | (grammar.type == "sequence") = {
+    tipo: "sequência"
+    partes: translate_parts({ parts: grammar.parts index: 0 result: [] })
+    formato: grammar.format
+  }
+  | grammar
+
+input_grammar = {
+  type: "sequence"
+  parts: [
+    { type: "symbol" text: "a" }
+    { type: "symbol" text: "b" }
+    { type: "symbol" text: "c" }
+  ]
+  format: "text"
+}
+
+translated = translate_grammar_to_portuguese(input_grammar)
+
+test_sequence = dialeto.analisar({
+  entrada: "abc"
+  gramática: translated
+})
+
+tester = formato => (
+  "tipo: " + translated.tipo + "\n" +
+  "formato: " + translated.formato + "\n" +
+  "partes length: " + translated.partes[.] + "\n" +
+  "partes[0].tipo: " + translated.partes[0].tipo + "\n" +
+  "partes[0].texto: " + translated.partes[0].texto + "\n" +
+  "sucesso: " + test_sequence.sucesso + "\n" +
+  "valor: " + test_sequence.valor + "\n"
+)
+
+tester

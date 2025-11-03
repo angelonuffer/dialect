@@ -1,0 +1,11 @@
+dialeto = ../deps/dialeto/código/0
+
+result = dialeto.analisar({
+  entrada: "hello"
+  gramática: {
+    tipo: "símbolo"
+    texto: "hello"
+  }
+})
+
+result
