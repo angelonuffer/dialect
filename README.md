@@ -181,14 +181,26 @@ Matches/generates repeated elements.
 }
 ```
 
+## Examples
+
+See the `examples/` directory for practical examples:
+
+```bash
+# Run the identifier parser example
+node deps/0/código/0_node.js examples/identifier_parser.0 test
+```
+
 ## Running Tests
 
 ```bash
 # Run basic tests
 node deps/0/código/0_node.js tests/basic_test.0 test
 
-# Run comprehensive tests
+# Run all grammar types test
 node deps/0/código/0_node.js tests/all_types_test.0 test
+
+# Run object format test
+node deps/0/código/0_node.js tests/object_format_test.0 test
 ```
 
 ## Implementation Details

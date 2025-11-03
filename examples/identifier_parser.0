@@ -1,0 +1,37 @@
+dialect = ../code/0
+
+identifier_grammar = {
+  type: "repetition"
+  grammar: {
+    type: "alternative"
+    options: [
+      { type: "range" from: "a" to: "z" }
+      { type: "range" from: "A" to: "Z" }
+      { type: "range" from: "0" to: "9" }
+    ]
+  }
+  format: "text"
+  minimum: 1
+}
+
+test_input = "hello123"
+
+result = dialect.analyze({
+  input: test_input
+  grammar: identifier_grammar
+})
+
+check_success = x =>
+  | (result.success == 1) = "PASS"
+  | "FAIL"
+
+extract_value = x =>
+  | (result.success == 1) = result.value
+  | "N/A"
+
+test1 = "Identifier Parse: " + check_success(0)
+test2 = "Value: " + extract_value(0)
+
+tester = formato => test1 + "\n" + test2 + "\n"
+
+tester
