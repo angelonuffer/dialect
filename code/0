@@ -4,6 +4,7 @@ translate_format = format =>
   | (format == "text") = "texto"
   | (format == "list") = "lista"
   | (format == "object") = "objeto"
+  | (format == 0) = 0
   | format
 
 translate_parts = { parts index result } =>
@@ -12,7 +13,7 @@ translate_parts = { parts index result } =>
 
 translate_object_parts = { parts index result } =>
   | (index >= parts[.]) = result
-  | translate_object_parts({ parts: parts index: index + 1 result: [...result { nome: parts[index].name gramática: translate_grammar_to_portuguese(parts[index].grammar) }] })
+  | translate_object_parts({ parts: parts index: index + 1 result: [...result { nome: parts[index].name gramatica: translate_grammar_to_portuguese(parts[index].grammar) }] })
 
 translate_options = { options index result } =>
   | (index >= options[.]) = result
