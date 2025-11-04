@@ -1,4 +1,4 @@
-# dialect
+# Dialect
 
 An English-language wrapper for the [dialeto](https://github.com/angelonuffer/dialeto) grammar parser/generator library, implemented in [language 0](https://github.com/angelonuffer/0).
 
@@ -11,30 +11,7 @@ This library provides an English API to the Portuguese-language `dialeto` librar
 3. **Translates result keys** from Portuguese to English
 4. **Delegates all work** to the underlying `dialeto` library
 
-## Requirements
-
-- Node.js version 20 or higher
-- The language-0 interpreter from [github.com/angelonuffer/0](https://github.com/angelonuffer/0)
-- The dialeto library from [github.com/angelonuffer/dialeto](https://github.com/angelonuffer/dialeto)
-
-## Installation
-
-Clone the repository and its dependencies:
-
-```bash
-git clone https://github.com/angelonuffer/dialect.git
-cd dialect
-git clone https://github.com/angelonuffer/0.git deps/0
-git clone https://github.com/angelonuffer/dialeto.git deps/dialeto
-```
-
 ## Usage
-
-### Importing the Library
-
-```0
-dialect = code/0
-```
 
 ### API
 
@@ -181,28 +158,6 @@ Matches/generates repeated elements.
 }
 ```
 
-## Examples
-
-See the `examples/` directory for practical examples:
-
-```bash
-# Run the identifier parser example
-node deps/0/código/0_node.js examples/identifier_parser.0 test
-```
-
-## Running Tests
-
-```bash
-# Run basic tests
-node deps/0/código/0_node.js tests/basic_test.0 test
-
-# Run all grammar types test
-node deps/0/código/0_node.js tests/all_types_test.0 test
-
-# Run object format test
-node deps/0/código/0_node.js tests/object_format_test.0 test
-```
-
 ## Implementation Details
 
 ### Translation Mappings
@@ -240,13 +195,3 @@ node deps/0/código/0_node.js tests/object_format_test.0 test
 - `pos` ← `pos`
 - `expected` ← `esperado`
 - `found` ← `encontrado`
-
-## License
-
-This project follows the same license as the underlying dialeto and language-0 projects.
-
-## Credits
-
-- Language 0: [github.com/angelonuffer/0](https://github.com/angelonuffer/0)
-- Dialeto: [github.com/angelonuffer/dialeto](https://github.com/angelonuffer/dialeto)
-- Created by Ângelo Otávio Nuffer Nunes
