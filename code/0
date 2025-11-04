@@ -1,0 +1,111 @@
+dialeto = ../deps/dialeto/código/0
+
+translate_format = format =>
+  | (format == "text") = "texto"
+  | (format == "list") = "lista"
+  | (format == "object") = "objeto"
+  | (format == 0) = 0
+  | format
+
+translate_parts = { parts index result } =>
+  | (index >= parts[.]) = result
+  | translate_parts({ parts: parts index: index + 1 result: [...result translate_grammar_to_portuguese(parts[index])] })
+
+translate_object_parts = { parts index result } =>
+  | (index >= parts[.]) = result
+  | translate_object_parts({ parts: parts index: index + 1 result: [...result { nome: parts[index].name gramatica: translate_grammar_to_portuguese(parts[index].grammar) }] })
+
+translate_options = { options index result } =>
+  | (index >= options[.]) = result
+  | translate_options({ options: options index: index + 1 result: [...result translate_grammar_to_portuguese(options[index])] })
+
+translate_grammar_to_portuguese = grammar =>
+  | (grammar.type == "symbol") = {
+    tipo: "símbolo"
+    texto: grammar.text
+  }
+  | (grammar.type == "range") = {
+    tipo: "faixa"
+    de: grammar.from
+    até: grammar.to
+  }
+  | (grammar.type == "sequence" & grammar.format == "object") = {
+    tipo: "sequência"
+    partes: translate_object_parts({ parts: grammar.parts index: 0 result: [] })
+    formato: translate_format(grammar.format)
+  }
+  | (grammar.type == "sequence") = {
+    tipo: "sequência"
+    partes: translate_parts({ parts: grammar.parts index: 0 result: [] })
+    formato: translate_format(grammar.format)
+  }
+  | (grammar.type == "alternative") = {
+    tipo: "alternativa"
+    opções: translate_options({ options: grammar.options index: 0 result: [] })
+  }
+  | (grammar.type == "optional") = {
+    tipo: "opcional"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+  }
+  | (grammar.type == "repetition" & grammar.minimum != 0 & grammar.maximum != 0) = {
+    tipo: "repetição"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+    formato: translate_format(grammar.format)
+    minimo: grammar.minimum
+    maximo: grammar.maximum
+  }
+  | (grammar.type == "repetition" & grammar.minimum != 0) = {
+    tipo: "repetição"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+    formato: translate_format(grammar.format)
+    minimo: grammar.minimum
+  }
+  | (grammar.type == "repetition" & grammar.maximum != 0) = {
+    tipo: "repetição"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+    formato: translate_format(grammar.format)
+    maximo: grammar.maximum
+  }
+  | (grammar.type == "repetition") = {
+    tipo: "repetição"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+    formato: translate_format(grammar.format)
+  }
+  | grammar
+
+translate_result_to_english = result =>
+  | (result.sucesso == 1) = {
+    success: 1
+    value: result.valor
+  }
+  | {
+    success: 0
+    pos: result.pos
+    expected: result.esperado
+    found: result.encontrado
+  }
+
+translate_generation_to_english = result =>
+  | (result.sucesso == 1) = {
+    success: 1
+    output: result.saída
+  }
+  | {
+    success: 0
+  }
+
+dialect = {
+  analyze: { input grammar } =>
+    translate_result_to_english(dialeto.analisar({
+      entrada: input
+      gramática: translate_grammar_to_portuguese(grammar)
+    }))
+
+  generate: { value grammar } =>
+    translate_generation_to_english(dialeto.gerar({
+      valor: value
+      gramática: translate_grammar_to_portuguese(grammar)
+    }))
+}
+
+dialect

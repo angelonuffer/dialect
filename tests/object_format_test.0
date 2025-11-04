@@ -1,0 +1,64 @@
+dialect = ../code/0
+
+test_object_sequence = dialect.analyze({
+  input: "abc"
+  grammar: {
+    type: "sequence"
+    parts: [
+      { name: "first" grammar: { type: "symbol" text: "a" } }
+      { name: "second" grammar: { type: "symbol" text: "b" } }
+      { name: "third" grammar: { type: "symbol" text: "c" } }
+    ]
+    format: "object"
+  }
+})
+
+test_list_sequence = dialect.analyze({
+  input: "xyz"
+  grammar: {
+    type: "sequence"
+    parts: [
+      { type: "symbol" text: "x" }
+      { type: "symbol" text: "y" }
+      { type: "symbol" text: "z" }
+    ]
+    format: "list"
+  }
+})
+
+test_generate_object = dialect.generate({
+  value: {
+    first: "a"
+    second: "b"
+    third: "c"
+  }
+  grammar: {
+    type: "sequence"
+    parts: [
+      { name: "first" grammar: { type: "symbol" text: "a" } }
+      { name: "second" grammar: { type: "symbol" text: "b" } }
+      { name: "third" grammar: { type: "symbol" text: "c" } }
+    ]
+    format: "object"
+  }
+})
+
+check1 = x =>
+  | (test_object_sequence.success == 1 & test_object_sequence.value.first == "a" & test_object_sequence.value.second == "b" & test_object_sequence.value.third == "c") = "PASS"
+  | "FAIL"
+
+check2 = x =>
+  | (test_list_sequence.success == 1 & test_list_sequence.value[0] == "x" & test_list_sequence.value[1] == "y" & test_list_sequence.value[2] == "z") = "PASS"
+  | "FAIL"
+
+check3 = x =>
+  | (test_generate_object.success == 1 & test_generate_object.output == "abc") = "PASS"
+  | "FAIL"
+
+test1 = "Test Object Sequence: " + check1(0)
+test2 = "Test List Sequence: " + check2(0)
+test3 = "Test Generate Object: " + check3(0)
+
+tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n"
+
+tester

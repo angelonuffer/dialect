@@ -1,0 +1,45 @@
+dialect = ../code/0
+
+result1 = dialect.analyze({
+  input: "hello"
+  grammar: {
+    type: "symbol"
+    text: "hello"
+  }
+})
+
+result2 = dialect.analyze({
+  input: "world"
+  grammar: {
+    type: "symbol"
+    text: "hello"
+  }
+})
+
+result3 = dialect.generate({
+  value: "test"
+  grammar: {
+    type: "symbol"
+    text: "test"
+  }
+})
+
+check_test1 = x =>
+  | (result1.success == 1 & result1.value == "hello") = "PASS"
+  | "FAIL"
+
+check_test2 = x =>
+  | (result2.success == 0) = "PASS"
+  | "FAIL"
+
+check_test3 = x =>
+  | (result3.success == 1 & result3.output == "test") = "PASS"
+  | "FAIL"
+
+test1 = "Test 1 - Symbol match success: " + check_test1(0)
+test2 = "Test 2 - Symbol match failure: " + check_test2(0)
+test3 = "Test 3 - Symbol generate: " + check_test3(0)
+
+tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n"
+
+tester
