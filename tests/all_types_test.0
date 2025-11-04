@@ -1,3 +1,4 @@
+uniteste = ../deps/uniteste.0
 dialect = ../code/0
 
 test_range = dialect.analyze({
@@ -61,37 +62,20 @@ test_generate_range = dialect.generate({
   }
 })
 
-check1 = x =>
-  | (test_range.success == 1 & test_range.value == "c") = "PASS"
-  | "FAIL"
-
-check2 = x =>
-  | (test_sequence.success == 1 & test_sequence.value == "abc") = "PASS"
-  | "FAIL"
-
-check3 = x =>
-  | (test_alternative.success == 1 & test_alternative.value == "hello") = "PASS"
-  | "FAIL"
-
-check4 = x =>
-  | (test_optional.success == 1 & test_optional.value == "") = "PASS"
-  | "FAIL"
-
-check5 = x =>
-  | (test_repetition.success == 1 & test_repetition.value == "aaa") = "PASS"
-  | "FAIL"
-
-check6 = x =>
-  | (test_generate_range.success == 1 & test_generate_range.output == "m") = "PASS"
-  | "FAIL"
-
-test1 = "Test Range: " + check1(0)
-test2 = "Test Sequence: " + check2(0)
-test3 = "Test Alternative: " + check3(0)
-test4 = "Test Optional: " + check4(0)
-test5 = "Test Repetition: " + check5(0)
-test6 = "Test Generate Range: " + check6(0)
-
-tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n" + test4 + "\n" + test5 + "\n" + test6 + "\n"
-
-tester
+uniteste.descrever({
+  nome: "Testes de Todos os Tipos"
+  testes: [
+    uniteste.iguais({ args: [test_range.success 1] })
+    uniteste.iguais({ args: [test_range.value "c"] })
+    uniteste.iguais({ args: [test_sequence.success 1] })
+    uniteste.iguais({ args: [test_sequence.value "abc"] })
+    uniteste.iguais({ args: [test_alternative.success 1] })
+    uniteste.iguais({ args: [test_alternative.value "hello"] })
+    uniteste.iguais({ args: [test_optional.success 1] })
+    uniteste.iguais({ args: [test_optional.value ""] })
+    uniteste.iguais({ args: [test_repetition.success 1] })
+    uniteste.iguais({ args: [test_repetition.value "aaa"] })
+    uniteste.iguais({ args: [test_generate_range.success 1] })
+    uniteste.iguais({ args: [test_generate_range.output "m"] })
+  ]
+})

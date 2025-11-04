@@ -1,0 +1,9 @@
+[submodule "deps/language0"]
+	path = deps/language0
+	url = https://github.com/angelonuffer/0
+[submodule "deps/dialeto"]
+	path = deps/dialeto
+	url = https://github.com/angelonuffer/dialeto
+[submodule "deps/uniteste"]
+	path = deps/uniteste
+	url = https://github.com/angelonuffer/uniteste
