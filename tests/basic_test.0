@@ -1,5 +1,5 @@
 dialect = ../code/0
-unitest = https://cdn.jsdelivr.net/gh/angelonuffer/unitest@c329fba680e4f77f514bf56990522199e3648b2c/code/0
+unitest = unitest.0
 
 result1 = dialect.analyze({
   input: "hello"

@@ -1,0 +1,12 @@
+unitest = unitest.0
+
+unitest.display(
+  unitest.describe({
+    name: "dialect"
+    tests: [
+      all_types_test.0
+      basic_test.0
+      object_format_test.0
+    ]
+  })
+)
