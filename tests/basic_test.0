@@ -1,4 +1,5 @@
 dialect = ../code/0
+unitest = https://cdn.jsdelivr.net/gh/angelonuffer/unitest@c329fba680e4f77f514bf56990522199e3648b2c/code/0
 
 result1 = dialect.analyze({
   input: "hello"
@@ -24,22 +25,28 @@ result3 = dialect.generate({
   }
 })
 
-check_test1 = x =>
-  | (result1.success == 1 & result1.value == "hello") = "PASS"
-  | "FAIL"
-
-check_test2 = x =>
-  | (result2.success == 0) = "PASS"
-  | "FAIL"
-
-check_test3 = x =>
-  | (result3.success == 1 & result3.output == "test") = "PASS"
-  | "FAIL"
-
-test1 = "Test 1 - Symbol match success: " + check_test1(0)
-test2 = "Test 2 - Symbol match failure: " + check_test2(0)
-test3 = "Test 3 - Symbol generate: " + check_test3(0)
-
-tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n"
-
-tester
+unitest.describe({
+  name: "Basic Tests"
+  tests: [
+    unitest.describe({
+      name: "Symbol match success"
+      tests: [
+        unitest.equals([ result1.success 1 ])
+        unitest.equals([ result1.value "hello" ])
+      ]
+    })
+    unitest.describe({
+      name: "Symbol match failure"
+      tests: [
+        unitest.equals([ result2.success 0 ])
+      ]
+    })
+    unitest.describe({
+      name: "Symbol generate"
+      tests: [
+        unitest.equals([ result3.success 1 ])
+        unitest.equals([ result3.output "test" ])
+      ]
+    })
+  ]
+})

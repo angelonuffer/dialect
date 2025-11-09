@@ -1,4 +1,5 @@
 dialect = ../code/0
+unitest = https://cdn.jsdelivr.net/gh/angelonuffer/unitest@c329fba680e4f77f514bf56990522199e3648b2c/code/0
 
 test_object_sequence = dialect.analyze({
   input: "abc"
@@ -43,22 +44,31 @@ test_generate_object = dialect.generate({
   }
 })
 
-check1 = x =>
-  | (test_object_sequence.success == 1 & test_object_sequence.value.first == "a" & test_object_sequence.value.second == "b" & test_object_sequence.value.third == "c") = "PASS"
-  | "FAIL"
-
-check2 = x =>
-  | (test_list_sequence.success == 1 & test_list_sequence.value[0] == "x" & test_list_sequence.value[1] == "y" & test_list_sequence.value[2] == "z") = "PASS"
-  | "FAIL"
-
-check3 = x =>
-  | (test_generate_object.success == 1 & test_generate_object.output == "abc") = "PASS"
-  | "FAIL"
-
-test1 = "Test Object Sequence: " + check1(0)
-test2 = "Test List Sequence: " + check2(0)
-test3 = "Test Generate Object: " + check3(0)
-
-tester = formato => test1 + "\n" + test2 + "\n" + test3 + "\n"
-
-tester
+unitest.describe({
+  name: "Object and List Format Tests"
+  tests: [
+    unitest.describe({
+      name: "Object Sequence"
+      tests: [
+        unitest.equals([ test_object_sequence.success 1 ])
+        unitest.equals([ test_object_sequence.value.first "a" ])
+        unitest.equals([ test_object_sequence.value.second "b" ])
+        unitest.equals([ test_object_sequence.value.third "c" ])
+      ]
+    })
+    unitest.describe({
+      name: "List Sequence"
+      tests: [
+        unitest.equals([ test_list_sequence.success 1 ])
+        unitest.lists_equal([ test_list_sequence.value [ "x" "y" "z" ] ])
+      ]
+    })
+    unitest.describe({
+      name: "Generate Object"
+      tests: [
+        unitest.equals([ test_generate_object.success 1 ])
+        unitest.equals([ test_generate_object.output "abc" ])
+      ]
+    })
+  ]
+})
