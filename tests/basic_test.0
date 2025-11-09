@@ -1,7 +1,7 @@
 dialect = ../code/0
 unitest = unitest.0
 
-result1 = dialect.analyze({
+result1 = dialect.parse({
   input: "hello"
   grammar: {
     type: "symbol"
@@ -9,7 +9,7 @@ result1 = dialect.analyze({
   }
 })
 
-result2 = dialect.analyze({
+result2 = dialect.parse({
   input: "world"
   grammar: {
     type: "symbol"

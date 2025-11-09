@@ -95,7 +95,7 @@ translate_generation_to_english = result =>
   }
 
 dialect = {
-  analyze: { input grammar } =>
+  parse: { input grammar } =>
     translate_result_to_english(dialeto.analisar({
       entrada: input
       gramática: translate_grammar_to_portuguese(grammar)

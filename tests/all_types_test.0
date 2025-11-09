@@ -1,7 +1,7 @@
 dialect = ../code/0
 unitest = unitest.0
 
-test_range = dialect.analyze({
+test_range = dialect.parse({
   input: "c"
   grammar: {
     type: "range"
@@ -10,7 +10,7 @@ test_range = dialect.analyze({
   }
 })
 
-test_sequence = dialect.analyze({
+test_sequence = dialect.parse({
   input: "abc"
   grammar: {
     type: "sequence"
@@ -23,7 +23,7 @@ test_sequence = dialect.analyze({
   }
 })
 
-test_alternative = dialect.analyze({
+test_alternative = dialect.parse({
   input: "hello"
   grammar: {
     type: "alternative"
@@ -34,7 +34,7 @@ test_alternative = dialect.analyze({
   }
 })
 
-test_optional = dialect.analyze({
+test_optional = dialect.parse({
   input: ""
   grammar: {
     type: "optional"
@@ -42,7 +42,7 @@ test_optional = dialect.analyze({
   }
 })
 
-test_repetition = dialect.analyze({
+test_repetition = dialect.parse({
   input: "aaa"
   grammar: {
     type: "repetition"
