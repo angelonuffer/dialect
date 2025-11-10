@@ -7,6 +7,7 @@ unitest.display(
       all_types_test.0
       basic_test.0
       object_format_test.0
+      negation_test.0
     ]
   })
 )

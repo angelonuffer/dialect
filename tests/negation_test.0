@@ -1,0 +1,126 @@
+dialect = ../code/0
+unitest = unitest.0
+
+test_negation_success = dialect.parse({
+  input: "a"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "b"
+    }
+  }
+})
+
+test_negation_failure = dialect.parse({
+  input: "a"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "a"
+    }
+  }
+})
+
+test_negation_with_range = dialect.parse({
+  input: "1"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "range"
+      from: "a"
+      to: "z"
+    }
+  }
+})
+
+test_negation_sequence = dialect.parse({
+  input: "abc"
+  grammar: {
+    type: "sequence"
+    parts: [
+      {
+        type: "negation"
+        grammar: { type: "symbol" text: "x" }
+      }
+      {
+        type: "negation"
+        grammar: { type: "symbol" text: "y" }
+      }
+      {
+        type: "negation"
+        grammar: { type: "symbol" text: "z" }
+      }
+    ]
+    format: "text"
+  }
+})
+
+test_negation_generate = dialect.generate({
+  value: "x"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "y"
+    }
+  }
+})
+
+test_negation_generate_failure = dialect.generate({
+  value: "a"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "a"
+    }
+  }
+})
+
+unitest.describe({
+  name: "Negation Grammar Tests"
+  tests: [
+    unitest.describe({
+      name: "Negation parse success (not matching)"
+      tests: [
+        unitest.equals([ test_negation_success.success 1 ])
+        unitest.equals([ test_negation_success.value "a" ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation parse failure (matching)"
+      tests: [
+        unitest.equals([ test_negation_failure.success 0 ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation with range"
+      tests: [
+        unitest.equals([ test_negation_with_range.success 1 ])
+        unitest.equals([ test_negation_with_range.value "1" ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation in sequence"
+      tests: [
+        unitest.equals([ test_negation_sequence.success 1 ])
+        unitest.equals([ test_negation_sequence.value "abc" ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation generate success"
+      tests: [
+        unitest.equals([ test_negation_generate.success 1 ])
+        unitest.equals([ test_negation_generate.output "x" ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation generate failure"
+      tests: [
+        unitest.equals([ test_negation_generate_failure.success 0 ])
+      ]
+    })
+  ]
+})
