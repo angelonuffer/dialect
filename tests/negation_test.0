@@ -1,0 +1,43 @@
+dialect = ../code/0
+unitest = unitest.0
+
+result1 = dialect.parse({
+  input: "a"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "a"
+    }
+  }
+})
+
+result2 = dialect.parse({
+  input: "b"
+  grammar: {
+    type: "negation"
+    grammar: {
+      type: "symbol"
+      text: "a"
+    }
+  }
+})
+
+unitest.describe({
+  name: "Negation Tests"
+  tests: [
+    unitest.describe({
+      name: "Negation match failure"
+      tests: [
+        unitest.equals([ result1.success 0 ])
+      ]
+    })
+    unitest.describe({
+      name: "Negation match success"
+      tests: [
+        unitest.equals([ result2.success 1 ])
+        unitest.equals([ result2.value "b" ])
+      ]
+    })
+  ]
+})

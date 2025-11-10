@@ -47,6 +47,10 @@ translate_grammar_to_portuguese = grammar =>
     tipo: "opcional"
     gramática: translate_grammar_to_portuguese(grammar.grammar)
   }
+  | (grammar.type == "negation") = {
+    tipo: "negação"
+    gramática: translate_grammar_to_portuguese(grammar.grammar)
+  }
   | (grammar.type == "repetition" & grammar.minimum != 0 & grammar.maximum != 0) = {
     tipo: "repetição"
     gramática: translate_grammar_to_portuguese(grammar.grammar)
