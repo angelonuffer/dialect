@@ -1,4 +1,4 @@
-dialeto = https://cdn.jsdelivr.net/gh/angelonuffer/dialeto@latest/código/0
+dialeto = https://cdn.jsdelivr.net/gh/angelonuffer/dialeto@52665be5f1981cb36a99d322f7ce79a585674a86/código/0
 
 translate_format = format =>
   | (format == "text") = "texto"
