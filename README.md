@@ -43,6 +43,9 @@ The grammar object that defines the parsing rules.
   - `minimum : number` (optional) - Minimum number of occurrences required. Default: 1.
   - `maximum : number` (optional) - Maximum number of occurrences allowed. Omit for unlimited.
 
+- If `type` == "negation":
+  - `grammar : object` - Grammar object. The parsing will succeed if the grammar does NOT match the input and there is still input available. It consumes one character.
+
 ## analysis : object
 
 An object containing the result of the parsing.
