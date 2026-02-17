@@ -47,29 +47,12 @@ translate_grammar_to_portuguese = grammar =>
     tipo: "opcional"
     gramática: translate_grammar_to_portuguese(grammar.grammar)
   }
-  | (grammar.type == "repetition" & grammar.minimum != 0 & grammar.maximum != 0) = {
-    tipo: "repetição"
-    gramática: translate_grammar_to_portuguese(grammar.grammar)
-    formato: translate_format(grammar.format)
-    minimo: grammar.minimum
-    maximo: grammar.maximum
-  }
-  | (grammar.type == "repetition" & grammar.minimum != 0) = {
-    tipo: "repetição"
-    gramática: translate_grammar_to_portuguese(grammar.grammar)
-    formato: translate_format(grammar.format)
-    minimo: grammar.minimum
-  }
-  | (grammar.type == "repetition" & grammar.maximum != 0) = {
-    tipo: "repetição"
-    gramática: translate_grammar_to_portuguese(grammar.grammar)
-    formato: translate_format(grammar.format)
-    maximo: grammar.maximum
-  }
   | (grammar.type == "repetition") = {
     tipo: "repetição"
     gramática: translate_grammar_to_portuguese(grammar.grammar)
     formato: translate_format(grammar.format)
+    minimo: grammar["minimum"]
+    maximo: grammar["maximum"]
   }
   | (grammar.type == "negation") = {
     tipo: "negação"

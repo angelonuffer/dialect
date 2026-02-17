@@ -53,6 +53,16 @@ test_repetition = dialect.parse({
   }
 })
 
+test_repetition_no_max = dialect.parse({
+  input: "aaaa"
+  grammar: {
+    type: "repetition"
+    grammar: { type: "symbol" text: "a" }
+    format: "text"
+    minimum: 1
+  }
+})
+
 test_generate_range = dialect.generate({
   value: "m"
   grammar: {
@@ -98,6 +108,8 @@ unitest.describe({
       tests: [
         unitest.equals([ test_repetition.success 1 ])
         unitest.equals([ test_repetition.value "aaa" ])
+        unitest.equals([ test_repetition_no_max.success 1 ])
+        unitest.equals([ test_repetition_no_max.value "aaaa" ])
       ]
     })
     unitest.describe({
